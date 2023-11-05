@@ -1,18 +1,28 @@
 class Solution {
     public int getWinner(int[] arr, int k) {
-        int currentWinner = arr[0];
-        int count = 0;
+        int maxElement = arr[0];
         for (int i = 1; i < arr.length; i++) {
-            if (arr[i] > currentWinner) {
-                currentWinner = arr[i];
-                count = 1;
+            maxElement = Math.max(maxElement, arr[i]);
+        }
+        
+        int curr = arr[0];
+        int winstreak = 0;
+        
+        for (int i = 1; i < arr.length; i++) {
+            int opponent = arr[i];
+            
+            if (curr > opponent) {
+                winstreak++;
             } else {
-                count++;
+                curr = opponent;
+                winstreak = 1;
             }
-            if (count == k) {
-                return currentWinner;
+            
+            if (winstreak == k || curr == maxElement) {
+                return curr;
             }
         }
-        return currentWinner;
+        
+        return -1;
     }
 }
